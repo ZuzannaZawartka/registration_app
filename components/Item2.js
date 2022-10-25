@@ -9,11 +9,7 @@ const Item = (props) => {
 
         props.fun(props.text)
 
-        if (typeof (props.text) == typeof (3)) {
-            console.log("cyfra")
-        } else {
-            console.log("liczba")
-        }
+
 
     }
 
