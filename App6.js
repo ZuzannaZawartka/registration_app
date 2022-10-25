@@ -83,7 +83,7 @@ export default class App extends React.Component {
       case ("Sin"):
         console.log(this.state.sum)
         this.setState({
-          string: "Math.sin(" + this.state.string + ")",
+          string: "Math.sin(" + (this.state.string) * (Math.PI / 180) + ")",
         }, () => {
           this.setState({
             string: this.convert(),
@@ -94,7 +94,7 @@ export default class App extends React.Component {
       case ("Cos"):
         console.log(this.state.sum)
         this.setState({
-          string: "Math.cos(" + this.state.string + ")",
+          string: "Math.cos(" + this.state.string * (Math.PI / 180) + ")",
         }, () => {
           this.setState({
             string: this.convert(),
@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
     flex: 2,
     display: "flex",
     flexDirection: 'column',
+    justifyContent: "center",
     backgroundColor: '#c9c9c9',
   },
   style3: {
