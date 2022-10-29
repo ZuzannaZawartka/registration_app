@@ -3,6 +3,7 @@ import React, { useEffect, Component, useState } from 'react';
 import { View, Button, FlatList, ActivityIndicator, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import ListItem from './ListItem';
 import ButtonNew from "./MyButton"
+import { ip, port } from './Settings';
 const Screen2 = (props) => {
 
     const backToLogin = () => {
@@ -12,79 +13,59 @@ const Screen2 = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
-    const sendData = async () => {
+    const getMovies = async () => {
+        try {
+            const response = await fetch(ip + port + "/");
+            const json = await response.json();
+            setData(json);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
-        fetch('http://172.20.10.4:3000/', {
-            method: 'GET',
+    useEffect(() => {
+        getMovies();
+    }, []);
 
-        }).then((response) => response.json())
-            .then((json) => {
-                setData(json);
-                setLoading(false);
-                return json;
+
+    const del = async (id) => {
+
+        fetch(ip + port + "/del", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id,
             })
+        }).then(async (response) => {
+
+            const json = await response.json();
+            setData(json);
+        })
             .catch((error) => {
                 console.error(error);
             });;
-        console.log("FETCHOWANIE")
-    };
 
-    //sendData();
+        console.log("USUWANIE " + id)
+    }
 
-
-    const DATA = [
-        {
-            id: '1',
-            title: 'First Item',
-        },
-        {
-            id: '2',
-            title: 'Second Item',
-        },
-        {
-            id: '3',
-            title: 'Third Item',
-        },
-        {
-            id: '3',
-            title: 'Third Item',
-        },
-    ];
-
-
-    let num = 0;
-    const renderItem = ({ item }) => (
-        num++,
-        <Text>xx</Text>
-        // <ListItem key={++num} id={item.id} login={item.title} />
-    );
-
-    sendData()
     return (
 
 
-        // <View style={styles.style1}>
-        //     <ButtonNew testPress={() => backToLogin()} style={{ justifyContent: "center", justifyContent: "center" }} text="BACK TO LOGIN PAGE"  ></ButtonNew>
-
-        //     <FlatList
-
-        //         data={DATA}
-        //         renderItem={renderItem}
-        //         keyExtractor={item => item.id}
-        //     />
-
-
-        // </View>
         <View style={{ flex: 1, padding: 24 }}>
-            {/* {isLoading ? <ActivityIndicator /> : (
-                // <FlatList
-                //     data={data}
-                //     keyExtractor={({ id }, index) => id}
-                //     renderItem={({ item }) => (
-                //         <Text>{item.title}, {item.releaseYear}</Text>
-                //     )}
-                // />
-            )} */}
+            {isLoading ? <ActivityIndicator /> : (
+                <FlatList
+                    data={data}
+                    keyExtractor={({ id }, index) => id}
+                    renderItem={({ item }) => (
+                        <ListItem key={item.id} id={item.id} functionDel={() => del(item.id)} function={() => props.navigation.navigate("Details", { id: item.id, login: item.login, password: item.password, data: item.registered })} login={item.login} />
+                    )}
+                />
+            )}
         </View>
     );
 }

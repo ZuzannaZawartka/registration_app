@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 
-import { View, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Button, Image, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 
 const Screen2 = (props) => {
 
@@ -10,29 +10,27 @@ const Screen2 = (props) => {
     }
 
 
-
+    console.log(props.route)
 
 
     return (
 
 
-        <View style={{ alignItems: "center", justifyContent: "center", flex: 1, backgroundColor: props.color }}>
-            <FlatList
-                data={
-                    [
-                        { key: 'a' },
-                        { key: 'b' },
-                        { key: 'c' },
-                    ]
-                }
+        <View style={{ alignItems: "center", flex: 1, backgroundColor: props.color }}>
+            <Image
 
-                renderItem={({ item }) => <Text>{item.key}</Text>}
+                source={{
+                    uri: 'https://www.w3schools.com/howto/img_avatar2.png',
+                }}
+                style={{ height: 200, width: 200, resizeMode: "center", margin: 20 }}
+            />
+            <Text>login:</Text>
+            <Text style={styles.style1}>{props.route.params.login}</Text>
+            <Text>password:</Text>
+            <Text style={styles.style1}>{props.route.params.password}</Text>
+            <Text >registered:</Text>
+            <Text style={styles.style1}>{(props.route.params.data)}</Text>
 
-            />
-            <Button
-                title="go to screen1"
-                onPress={() => props.navigation.navigate("s1", { a: 1, b: 2 })}
-            />
 
         </View>
     );
@@ -40,7 +38,7 @@ const Screen2 = (props) => {
 
 
 const styles = StyleSheet.create({
-    text: { fontSize: 48, },
+    style1: { fontSize: 25, color: "green", margin: 15 },
 
 });
 

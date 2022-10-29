@@ -37,10 +37,10 @@ const ListItem = (props) => {
                 <View style={styles.style2}>
 
                     <View style={{ padding: 10 }}>
-                        <ButtonNew text="Details"></ButtonNew>
+                        <ButtonNew text="Details" function={props.function}></ButtonNew>
                     </View>
                     <View style={{ padding: 10 }}>
-                        <ButtonNew text="Delete"></ButtonNew>
+                        <ButtonNew text="Delete" function={props.functionDel}></ButtonNew>
                     </View>
 
                 </View>

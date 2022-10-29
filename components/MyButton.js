@@ -22,7 +22,7 @@ const ButtonNew = (props) => {
                 borderRadius: 15,
                 fontSize: 48, width: width
             }}
-            onPress={props.testPress}
+            onPress={props.function}
         >
             <Text style={{ textAlign: "center", color: 'white', padding: 10 }}>{props.text}</Text>
         </TouchableOpacity>

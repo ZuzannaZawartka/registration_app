@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 
 import { View, Text, KeyboardAvoidingView, TextInput, FlatList, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import ButtonNew from "./MyButton"
+import { ip, port } from './Settings';
 const Main = (props) => {
 
 
@@ -22,7 +23,7 @@ const Main = (props) => {
     // };
 
     const sendData = async () => {
-        fetch('http://172.20.10.4:3000/', {
+        fetch(ip + port + "/", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -32,9 +33,12 @@ const Main = (props) => {
                 login: login,
                 password: password,
             })
-        }).then((response) => response.json())
+        }).then((response) => {
+
+            response.json()
+        })
             .then((json) => {
-                console.log(json.bool)
+                // console.log(json.bool)
                 // if (json.bool == false) {
                 //     alert("Taki użytkownik już istnieje ")
                 // } else {
@@ -49,8 +53,13 @@ const Main = (props) => {
 
 
     const anyFunction = () => {
+        console.log("SENDOWANIE")
+        if (login.length > 0 && password.length > 0) {
+            sendData()
+        } else {
+            alert("zsa krotki login")
+        }
 
-        sendData()
     }
 
 
@@ -81,7 +90,7 @@ const Main = (props) => {
 
                 />
 
-                <ButtonNew testPress={() => anyFunction()} style={{ justifyContent: "center", justifyContent: "center" }} text="Register" ></ButtonNew>
+                <ButtonNew function={() => anyFunction()} style={{ justifyContent: "center", justifyContent: "center" }} text="Register" ></ButtonNew>
 
             </View>
         </View >
